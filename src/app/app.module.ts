@@ -19,7 +19,7 @@ import {AppCommonModule} from "./common/common.module";
 import {UsersModule} from "./features/users/users.module";
 import {FormsModule} from "@angular/forms";
 
-const socketConfig: SocketIoConfig = { url: 'http://localhost:8999', options: {} };
+const socketConfig: SocketIoConfig = { url: 'https://my-angular-player-reonido-2.herokuapp.com', options: {} };
 
 @NgModule({
   declarations: [

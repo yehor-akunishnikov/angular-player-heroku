@@ -13,8 +13,8 @@ const io = new Server(server, {
 });
 const users = {};
 
-app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname + '/../dist/index.html'));
+app.get('*', function(req, res) {
+  res.sendFile(path.join(__dirname + '/../dist/angular-player/index.html'));
 });
 
 io.on('connection', (socket) => {
