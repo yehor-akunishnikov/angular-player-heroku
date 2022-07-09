@@ -4,7 +4,7 @@ import {createEffect} from '@ngrx/effects';
 
 import {map, withLatestFrom} from "rxjs";
 
-import {setSrc, setTime, togglePlay} from "../actions";
+import {play, setSrc, setTime, pause} from "../actions";
 import {PlayerWsService} from "../../../../../ws/player/service/player-ws.service";
 import {Socket} from "ngx-socket-io";
 import {AudioControlService} from "../../../services/audio-control.service";
@@ -18,11 +18,11 @@ export class PlayerWsEffects {
   ) {}
 
   play$ = createEffect(() => this.ws.play$.pipe(
-    map(() => togglePlay({toggleTo: true})),
+    map(() => play()),
   ));
 
   pause$ = createEffect(() => this.ws.pause$.pipe(
-    map(() => togglePlay({toggleTo: false})),
+    map(() => pause()),
   ));
 
   sync$ = createEffect(() => this.ws.sync$.pipe(

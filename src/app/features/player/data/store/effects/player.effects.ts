@@ -4,7 +4,7 @@ import {Actions, createEffect, ofType} from '@ngrx/effects';
 
 import {tap} from "rxjs";
 
-import {setTime, togglePlay} from "../actions";
+import {setTime, play, pause} from "../actions";
 import {AudioControlService} from "../../../services/audio-control.service";
 
 @Injectable()
@@ -14,14 +14,17 @@ export class PlayerEffects {
     private audioControlService: AudioControlService,
   ) {}
 
-  togglePlay$ = createEffect(() => this.actions$.pipe(
-    ofType(togglePlay),
-    tap(({toggleTo}) => {
-      if (toggleTo) {
-        this.audioControlService.play();
-      } else {
-        this.audioControlService.pause();
-      }
+  play$ = createEffect(() => this.actions$.pipe(
+    ofType(play),
+    tap(() => {
+      this.audioControlService.play();
+    }),
+  ), ({dispatch: false}));
+
+  pause$ = createEffect(() => this.actions$.pipe(
+    ofType(pause),
+    tap(() => {
+      this.audioControlService.pause();
     }),
   ), ({dispatch: false}));
 

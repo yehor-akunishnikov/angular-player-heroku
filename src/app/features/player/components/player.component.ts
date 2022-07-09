@@ -61,12 +61,12 @@ export class PlayerComponent implements OnInit, OnDestroy, OnChanges {
     this.audioControlService.startStream(url).subscribe(events => {});
   }
 
-  public pause(): void {
-    this.socket.emit('pause');
-  }
-
-  public play(): void {
-    this.socket.emit('play');
+  public togglePlay(isPlaying: boolean) {
+    if (isPlaying) {
+      this.socket.emit('pause');
+    } else {
+      this.socket.emit('play');
+    }
   }
 
   public seek(currentTime: number, direction: number, overwriteSeekTime?: number): void {

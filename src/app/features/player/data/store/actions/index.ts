@@ -1,9 +1,12 @@
 import {createAction, props} from "@ngrx/store";
 import {PlayerState} from "../../../models";
 
-export const togglePlay = createAction(
-  '[Player] Toggle Play',
-  props<{toggleTo: boolean}>()
+export const play = createAction(
+  '[Player] Play',
+);
+
+export const pause = createAction(
+  '[Player] Pause',
 );
 
 export const setPlayingState = createAction(
