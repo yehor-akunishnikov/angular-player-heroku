@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-app.use(express.static(__dirname + '/../dist'));
+app.use(express.static(__dirname + '/../dist/angular-player'));
 const path = require('path');
 const http = require('http');
 const server = http.createServer(app);
