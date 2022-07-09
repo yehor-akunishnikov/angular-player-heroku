@@ -43,7 +43,7 @@
   </div>
   <div class="card-footer">
     <button
-      *ngIf="role !== 'admin'"
+      *ngIf="role === 'admin'"
       class="btn btn-warning"
       (click)="openSrcModal()"
       aria-label="Upload button">
