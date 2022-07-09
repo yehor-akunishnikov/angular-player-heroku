@@ -1,0 +1,10 @@
+<div
+  *ngIf="display$ | async"
+  class="modal show d-block"
+  tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

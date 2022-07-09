@@ -1,0 +1,52 @@
+<div class="card player">
+  <div *ngIf="state$ | async as state" class="card-body">
+    <div class="btn-group">
+      <button
+        class="btn btn-outline-primary"
+        [disabled]="!state.canplay"
+        (click)="seek(state.currentTime, -1)"
+        aria-label="Rewind button">
+        <i class="bi bi-skip-backward-circle-fill"></i>
+      </button>
+
+      <button
+        class="btn btn-primary"
+        [disabled]="!state.canplay"
+        (click)="state.playing ? pause() : play()"
+        aria-label="Play button">
+        <i *ngIf="state.playing" class="bi bi-pause-circle-fill"></i>
+        <i *ngIf="!state.playing" class="bi bi-play-circle-fill"></i>
+      </button>
+
+      <button
+        class="btn btn-outline-primary"
+        [disabled]="!state.canplay"
+        (click)="seek(state.currentTime, 1)"
+        aria-label="Fast forward button">
+        <i class="bi bi-skip-forward-circle-fill"></i>
+      </button>
+    </div>
+    <hr>
+    <div class="btn-group w-100">
+      <button
+        class="btn btn-warning"
+        [disabled]="!state.canplay"
+        (click)="seek(state.currentTime, 1, 0)"
+        aria-label="Sync button">
+        <i class="bi bi-arrow-clockwise"></i>
+      </button>
+    </div>
+    <app-timeline
+      [currentTime]="state.readableCurrentTime"
+      [duration]="state.readableDuration">
+    </app-timeline>
+  </div>
+  <div class="card-footer">
+    <button
+      class="btn btn-warning"
+      (click)="openSrcModal()"
+      aria-label="Upload button">
+      <i class="bi bi-upload"></i>
+    </button>
+  </div>
+</div>

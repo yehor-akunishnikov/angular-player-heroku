@@ -1,0 +1,43 @@
+<div *ngIf="role$ | async as role" class="player-wrapper">
+  <app-player
+    [src]="src"
+    (srcModalOpen)="openModal(modal, 'src')"></app-player>
+</div>
+
+<app-modal [defaultState]="true" #modal>
+  <form action="">
+    <app-modal-header>
+      <h5 class="modal-title">Modal title</h5>
+      <a *ngIf="modalType === 'default'"
+         class="btn-close"
+         routerLink="/home"
+         aria-label="Close"
+         routerLinkActive="active"
+         ariaCurrentWhenActive="page">
+      </a>
+    </app-modal-header>
+    <app-modal-body>
+      <p *ngIf="modalType === 'default'">Would you like to enter?</p>
+      <div *ngIf="modalType === 'src'">
+        <p>Please enter a link to audio resource</p>
+        <input [(ngModel)]="src" name="src" placeholder="https://example.com/file.mp3" class="form-control" type="text">
+      </div>
+    </app-modal-body>
+    <app-modal-footer>
+      <a
+        *ngIf="modalType === 'default'"
+        class="btn btn-secondary"
+        routerLink="/home"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page">To Homepage
+      </a>
+      <button type="button" *ngIf="modalType === 'src'" (click)="modal.close()" class="btn btn-secondary">Close</button>
+      <button
+        (click)="saveModal(modal)"
+        type="button"
+        class="btn btn-primary">
+        <span>{{modalType === 'default' ? 'Enter player page' : 'Save'}}</span>
+      </button>
+    </app-modal-footer>
+  </form>
+</app-modal>
