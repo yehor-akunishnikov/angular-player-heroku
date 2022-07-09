@@ -1,4 +1,4 @@
-<div class="card player">
+<div *ngIf="role$ | async as role" class="card player">
   <div *ngIf="state$ | async as state" class="card-body">
     <div class="btn-group">
       <button
@@ -30,8 +30,8 @@
     <div class="btn-group w-100">
       <button
         class="btn btn-warning"
-        [disabled]="!state.canplay"
-        (click)="seek(state.currentTime, 1, 0)"
+        [disabled]="!state.canplay || role !== 'admin'"
+        (click)="sync(state.currentTime)"
         aria-label="Sync button">
         <i class="bi bi-arrow-clockwise"></i>
       </button>
@@ -43,6 +43,7 @@
   </div>
   <div class="card-footer">
     <button
+      *ngIf="role !== 'admin'"
       class="btn btn-warning"
       (click)="openSrcModal()"
       aria-label="Upload button">

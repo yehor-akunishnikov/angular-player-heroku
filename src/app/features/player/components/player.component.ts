@@ -9,9 +9,10 @@ import {
   Output, SimpleChanges
 } from '@angular/core';
 
-import {AudioControlService, defaultState, StreamState} from "../services/audio-control.service";
+import {AudioControlService, StreamState} from "../services/audio-control.service";
 import {Observable, of, Subscription} from "rxjs";
 import {Socket} from "ngx-socket-io";
+import {UsersDataService} from "../../users/data/services/users-data.service";
 
 @Component({
   selector: 'app-player',
@@ -25,12 +26,14 @@ export class PlayerComponent implements OnInit, OnDestroy, OnChanges {
 
   public state$: Observable<StreamState> = this.audioControlService.getState();
   public isLoading$: Observable<boolean> = of(false);
+  public role$ = this.users.role$;
 
   private seekTime = 15;
   private subscriptions = new Subscription();
 
   constructor(
     private audioControlService: AudioControlService,
+    private users: UsersDataService,
     private socket: Socket,
   ) {}
 
@@ -67,8 +70,12 @@ export class PlayerComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public seek(currentTime: number, direction: number, overwriteSeekTime?: number): void {
-    const seekTime = overwriteSeekTime ?? this.seekTime;
-    this.socket.emit('seek', Math.floor((currentTime || 0) + seekTime * direction));
+    const seekTime = overwriteSeekTime ? overwriteSeekTime : this.seekTime;
+    this.socket.emit('seek', Math.floor(currentTime + seekTime * direction));
+  }
+
+  public sync(currentTime: number) {
+    this.socket.emit('sync', currentTime);
   }
 
   public openSrcModal(): void {

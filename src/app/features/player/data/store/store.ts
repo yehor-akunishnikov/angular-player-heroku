@@ -17,3 +17,8 @@ export const playerSelector = createSelector(
   featureSelector,
   (state) => state[featureKey],
 );
+
+export const srcSelector = createSelector(
+  playerSelector,
+  (state => state.src),
+);

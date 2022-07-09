@@ -23,7 +23,7 @@ io.on('connection', (socket) => {
   socket.on('enteredPlayer', () => {
     socket.leave('lobby');
     socket.join('player');
-    users[socket.id] = {};
+    users[socket.id] = {id: socket.id};
 
     if (Array.from(io.sockets.sockets.keys()).length === 1) {
       socket.emit('setRole', 'admin');
@@ -31,11 +31,27 @@ io.on('connection', (socket) => {
     } else {
       socket.emit('setRole', 'default');
       users[socket.id].role = 'default';
+
+      const currentAdminId = Object.values(users).find(user => user.role === 'admin')?.id;
+
+      if (currentAdminId) {
+        io.sockets.sockets.get(currentAdminId).emit('getUrl', socket.id);
+      }
     }
   });
 
   socket.on('play', () => {
     io.to('player').emit('play');
+  });
+
+  socket.on('setSrc', (payload) => {
+    io.to('player').emit('setSrc', payload);
+  });
+
+  socket.on('giveUrl', ({id, url}) => {
+    if (url) {
+      io.sockets.sockets.get(id).emit('setSrc', url);
+    }
   });
 
   socket.on('pause', () => {

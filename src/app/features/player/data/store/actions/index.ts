@@ -24,3 +24,8 @@ export const setTime = createAction(
   '[Player] Set Time',
   props<{setTo: number}>()
 );
+
+export const setSrc = createAction(
+  '[Player] Set Src',
+  props<{src: string | null}>()
+);

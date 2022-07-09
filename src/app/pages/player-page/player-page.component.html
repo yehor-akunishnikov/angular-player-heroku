@@ -1,6 +1,6 @@
-<div *ngIf="role$ | async as role" class="player-wrapper">
+<div class="player-wrapper">
   <app-player
-    [src]="src"
+    [src]="src$ | async"
     (srcModalOpen)="openModal(modal, 'src')"></app-player>
 </div>
 

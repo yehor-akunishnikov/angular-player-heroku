@@ -1,27 +1,23 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 
-import {UsersDataService} from "../../features/users/data/services/users-data.service";
 import {Socket} from "ngx-socket-io";
 import {ModalComponent} from "../../common/components/modal/modal.component";
+import {AudioControlService} from "../../features/player/services/audio-control.service";
 
 @Component({
   selector: 'app-player-page',
   templateUrl: './player-page.component.html',
-  styleUrls: ['./player-page.component.scss']
+  styleUrls: ['./player-page.component.scss'],
 })
-export class PlayerPageComponent implements OnInit {
+export class PlayerPageComponent {
   public src = null;
-  public role$ = this.users.role$;
   public modalType: 'default' | 'src' = 'default';
+  public src$ = this.audioControlService.src$;
 
   constructor(
-    private users: UsersDataService,
     private socket: Socket,
+    private audioControlService: AudioControlService,
   ) {
-  }
-
-  ngOnInit() {
-    this.users.role$.subscribe(console.log);
   }
 
   public saveModal(modal: ModalComponent) {
@@ -29,6 +25,8 @@ export class PlayerPageComponent implements OnInit {
       this.socket.emit('enteredPlayer');
       modal.close();
     } else {
+      this.socket.emit('setSrc', this.src);
+      this.src = null;
       modal.close();
     }
   }

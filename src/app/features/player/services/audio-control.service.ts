@@ -2,6 +2,8 @@ import {BehaviorSubject, Observable, Subject, takeUntil} from "rxjs";
 
 import * as moment from 'moment';
 import {Injectable} from "@angular/core";
+import {select, Store} from "@ngrx/store";
+import {srcSelector} from "../data/store/store";
 
 const events = [
   'ended', 'error', 'play', 'playing', 'pause', 'timeupdate', 'canplay', 'loadedmetadata', '`loadstart`'
@@ -35,6 +37,12 @@ export class AudioControlService {
   private audioObj = new Audio();
   private state: StreamState = defaultState;
   private stateChange: BehaviorSubject<StreamState> = new BehaviorSubject(this.state);
+  public src$ = this.store.pipe(select(srcSelector));
+
+  constructor(
+    private store: Store,
+  ) {
+  }
 
   private streamObservable(url: string): Observable<Event> {
     return new Observable(observer => {

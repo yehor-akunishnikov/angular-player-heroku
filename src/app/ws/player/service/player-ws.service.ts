@@ -12,4 +12,6 @@ export class PlayerWsService {
   public sync$ = this.socket.fromEvent('sync');
   public seek$ = this.socket.fromEvent('seek');
   public admin$ = this.socket.fromEvent('admin');
+  public setSrc$ = this.socket.fromEvent('setSrc');
+  public getUrl$ = this.socket.fromEvent('getUrl');
 }
